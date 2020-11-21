@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Switch, Route, Redirect, useHistory, useLocation } from 'react-router-dom'
 import { Box, ComponentsProvider } from '@looker/components'
 import AppContext from './AppContext'
-import { createTheme, getThemePallete, startsWithDark } from './theme'
+import { createTheme, startsWithDark } from './theme'
 import { Boards } from './Boards'
 import { BoardPage } from './BoardPage'
 import { ExtensionContext, ExtensionContextData } from '@looker/extension-sdk-react'
@@ -63,7 +63,8 @@ export const Main: React.FC = ({
     } else {
       setCurrentTheme(default_theme)
     }
-    if (themes.length > 2) {
+    
+    if (themes.length > 1) {
       const firstDark = find(sortBy(themes, ['id']), o=>{
         return startsWithDark(o.name!)
       })

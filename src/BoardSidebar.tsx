@@ -6,13 +6,16 @@ import { useHistory, useParams } from 'react-router-dom';
 import AppContext from './AppContext';
 import qs from 'query-string'
 import { BoardSidebarButtons } from './BoardSidebarButtons';
+import { ExtensionContext } from '@looker/extension-sdk-react';
 
 export function BoardSidebar( { board }: any ) {
   let history = useHistory();
   let {board_id, content_type, content_id }: any = useParams<any>();
   let { filters } = useContext(AppContext)
+  let {  extensionSDK } = useContext(ExtensionContext)
 
   const handleClick = (board_item: any) => {
+    extensionSDK.track('click', JSON.stringify({board_id, url: board_item.url}))
     history.push({
       pathname: `/boards/${board_id}${board_item.url}`,
       search: qs.stringify(filters)
