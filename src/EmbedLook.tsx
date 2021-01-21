@@ -115,7 +115,7 @@ function LookTable( {query}: any) {
         .withTheme(current_theme.name)
         .build()
         .connect()
-        .then(console.log)
+        .then()
         .catch((error: Error) => {
           console.error('Connection error', error)
         })

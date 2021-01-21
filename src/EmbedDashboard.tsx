@@ -19,7 +19,7 @@ export const EmbedDashboard: React.FC<any> = ({ next }) => {
 
   const canceller = (event: any) => {
     const is_look_or_dashboard = (['look','dashboard'].indexOf(event.link_type) > -1);
-    const is_dashboard_next = ( event.url.startsWith('/embed/dashboards-next/') || event.url.startsWith('/dashboards-next/') )
+    const is_dashboard_next = ( ( event?.url && event.url.startsWith('/embed/dashboards-next/') ) || ( event?.url && event.url.startsWith('/dashboards-next/') ) )
     const is_explore = (['dashboard:tile:explore','drillmodal:explore'].indexOf(event.type) > -1) 
     
     if ( is_dashboard_next || is_look_or_dashboard || is_explore ) {
