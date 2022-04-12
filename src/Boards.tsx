@@ -82,11 +82,31 @@ export function Boards( ) {
   },[])
 
   const getBoards = async () => {
-    const b = await sdk.ok(sdk.all_boards('id,title,description,section_order,board_sections(id,item_order,board_items(id,url))'))
+    // const b = await sdk.ok(sdk.all_boards('id,title,description,section_order,board_sections(id,item_order,board_items(id,url))'))
+    var b = await sdk.ok(sdk.all_boards('id,title,description,section_order'))
+    const b_sections = await sdk.ok(sdk.all_board_sections('id,board_id,item_order,board_items(id,url))'))
+    // for each board section, loop through and put it in the right board oject in b
+    b_sections.forEach(section => {
+      console.log('sect ', section.board_id)
+      let bSlot = b.find(e => e.id == section.board_id);
+      if (bSlot) {
+        if (bSlot.board_sections?.length){
+          bSlot.board_sections.push(section)
+        }
+        else{
+          bSlot.board_sections=[section]
+        }
+      } 
+    });
+
+    console.log(b)
+
+    // const b_items = await sdk.ok(sdk.all_board_items('id,url'))
     setBoards(filter(b, o=>{
       return (o?.board_sections?.length && o?.board_sections[0].board_items?.length )
     }))
   }
+
   if ( boards?.length ) {
     return (
       <Box p="large">
